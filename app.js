@@ -38,6 +38,8 @@ app.use(oauth2.inject());
 
 
 
+
+
 // Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -90,6 +92,9 @@ app.locals.title = 'dejCom historical data display';
 
 const index = require('./routes/index');
 app.use('/', index);
+
+const authRoutes = require('./routes/authRoutes');
+app.use('/', authRoutes);
 
 
 module.exports = app;
