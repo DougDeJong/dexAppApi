@@ -1,38 +1,98 @@
 const express    = require('express');
 const router     = express.Router();
+const axios      = require('axios');
 
 
 
 const app = express();
 
+var qs = require("querystring");
+var http = require("https");
 
 
 
 const clientID = process.env.DEXID
 const clientSecret = process.env.DEXSEC
+const clientURI = `http://localhost:${process.env.PORT}/oauth/redirect`
+
+
+
 
 // Declare the redirect route
-app.get('/oauth/redirect', (req, res) => {
-  // The req.query object has the query params that
-  // were sent to this route. We want the `code` param
+router.get('/oauth/redirect', (req, res) => {
+
+  console.log('$$$$$$$$$$$')
+
+  
   const requestToken = req.query.code
-  axios({
-    // make a POST request
-    method: 'post',
-    // to the Github authentication API, with the client ID, client secret
-    // and request token
-    url: `https://github.com/login/oauth/access_token?client_id=${clientID}&client_secret=${clientSecret}&code=${requestToken}`,
-    // Set the content type header, so that we get the response in JSOn
-    headers: {
-         accept: 'application/json'
+
+
+  var options = {
+    "method": "POST",
+    "hostname": "api.dexcom.com",
+    "port": null,
+    "path": "/v2/oauth2/token",
+    "headers": {
+      "content-type": "application/x-www-form-urlencoded",
+      "cache-control": "no-cache"
     }
-  }).then((response) => {
-    // Once we get the response, extract the access token from
-    // the response body
-    const accessToken = response.data.access_token
-    // redirect the user to the welcome page, along with the access token
-    res.redirect(`/welcome.html?access_token=${accessToken}`)
-  })
-})
+  };
+  
+  var req = http.request(options, function (res) {
+    var chunks = [];
+  
+    res.on("data", function (chunk) {
+      chunks.push(chunk);
+    });
+  
+    res.on("end", function () {
+      var body = Buffer.concat(chunks);
+      console.log(body.toString());
+    });
+  });
+
+  console.log(clientID, clientSecret, requestToken, clientURI)
+  
+  req.write(qs.stringify({ client_secret: clientSecret,
+    client_id: clientID,
+    code: requestToken,
+    grant_type: 'authorization_code',
+    redirect_uri: clientURI }));
+  req.end();
+
+
+});
+
+
+
+
+
+  // axios({
+  //   method: 'post',
+  //   url: `https://api.dexcom.com/v2/oauth2/token?client_secret=${clientSecret}&client_id=${clientID}&code=${requestToken}&redirect_uri=${clientURI}`,
+  //   headers: {
+  //        accept: 'application/x-www-form-urlencoded'
+  //   },
+  //   // query: {
+  //   //   client_secret: clientSecret,
+  //   //   client_id: clientID,
+  //   //   code: requestToken,
+  //   //   redirect_uri: clientURI,
+  //   // }
+  // }).then((response) => {
+
+  //   const accessToken = response.data.access_token
+  //   // redirect the user to the welcome page, along with the access token
+  //   res.redirect(`/index.html?access_token=${accessToken}`)
+  // })
+  // .catch((err) => {
+  //   console.log('@#$@#$!#@$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$')
+  //   console.log(req.query)
+  //   console.log(err)
+  // })
+
+
+
+
 
 module.exports = router;
