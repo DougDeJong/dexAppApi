@@ -18,6 +18,8 @@
     "dexcom-share2": "^1.0.1",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.0.2",
     "hbs": "^4.0.1",
     "mongoose": "^5.2.10",
     "morgan": "^1.9.0",
