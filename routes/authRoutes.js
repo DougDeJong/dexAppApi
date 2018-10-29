@@ -41,7 +41,7 @@ router.get('/oauth/redirect', (req, res) => {
       
         const accessToken = response.data.access_token
         // redirect the user to the welcome page, along with the access token
-        res.redirect('success',  {accessToken: accessToken})
+        res.render('success',  {accessToken: accessToken})
       })
       .catch((err) => {
           console.log(err)
