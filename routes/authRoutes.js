@@ -37,12 +37,11 @@ router.get('/oauth/redirect', (req, res) => {
     
     axios.post('https://sandbox-api.dexcom.com/v2/oauth2/token', Querystring.stringify(data))
     .then((response) => {
-      console.log(response.data)
       
       
         const accessToken = response.data.access_token
         // redirect the user to the welcome page, along with the access token
-        res.redirect(`/index.html?access_token=${accessToken}`)
+        res.redirect('success',  {accessToken: accessToken})
       })
       .catch((err) => {
           console.log(err)
