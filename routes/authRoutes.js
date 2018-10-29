@@ -6,7 +6,7 @@ const axios      = require('axios');
 
 const app = express();
 
-var qs = require("querystring");
+var Querystring = require("querystring");
 var http = require("https");
 
 
@@ -17,31 +17,27 @@ const clientURI = `http://localhost:${process.env.PORT}/oauth/redirect`
 
 
 
-
+// client_secret=${clientSecret}
 // Declare the redirect route
 router.get('/oauth/redirect', (req, res) => {
+
+
+  const requestToken = req.query.code;
+  const data = {
+    grant_type: 'authorization_code',
+    client_id: clientID,
+    client_secret: clientSecret,
+    code: requestToken,
+    redirect_uri: clientURI,
+  };
   
-  const requestToken = req
-  
-    if (res) {
-        console.log('############')
-        console.log(res)
-    
-        res.render('success', {auth: res.data})
-      }
     
     
     
     
-    axios({
-      method: 'post',
-      url: `https://sandbox-api.dexcom.com/v2/oauth2/token?client_secret=${clientSecret}&client_id=${clientID}&code=${requestToken}&grant_type=authorization_code&redirect_uri=${clientURI}&scope=offline_access`,
-      headers: {
-        accept: 'application/x-www-form-urlencoded',
-        authorization: `Bearer ${requestToken}`
-      },
-      
-    }).then((response) => {
+    axios.post('https://sandbox-api.dexcom.com/v2/oauth2/token', Querystring.stringify(data))
+    .then((response) => {
+      console.log(response.data)
       
       
         const accessToken = response.data.access_token
@@ -49,46 +45,12 @@ router.get('/oauth/redirect', (req, res) => {
         res.redirect(`/index.html?access_token=${accessToken}`)
       })
       .catch((err) => {
-          
+          console.log(err)
         })
 
       });
         
         
-        
-
-
-
-
-
-
-
-
-
-
-  // axios({
-  //   method: 'post',
-  //   url: `https://api.dexcom.com/v2/oauth2/token?client_secret=${clientSecret}&client_id=${clientID}&code=${requestToken}&redirect_uri=${clientURI}`,
-  //   headers: {
-  //        accept: 'application/x-www-form-urlencoded'
-  //   },
-  //   // query: {
-  //   //   client_secret: clientSecret,
-  //   //   client_id: clientID,
-  //   //   code: requestToken,
-  //   //   redirect_uri: clientURI,
-  //   // }
-  // }).then((response) => {
-
-  //   const accessToken = response.data.access_token
-  //   // redirect the user to the welcome page, along with the access token
-  //   res.redirect(`/index.html?access_token=${accessToken}`)
-  // })
-  // .catch((err) => {
-  //   console.log('@#$@#$!#@$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$')
-  //   console.log(req.query)
-  //   console.log(err)
-  // })
 
 
 
