@@ -70,44 +70,28 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-// Dexcom Setup
-app.locals.dexID = process.env.DEXID;
-
-app.locals.dexSEC = process.env.DEXSEC;
-
-app.locals.dexURI = 'dejCom'
  
-// const iterator = dexcom({
-//   username: 'DEXCOM_SHARE_USERNAME',
-//   password: 'DEXCOM_SHARE_PASSWORD'
-// })
- 
-// while (true) {
-//   const { done, value } = await iterator.next()
-//   console.log(value)
-  /*
-  { DT: '/Date(1515095827000-0800)/',
-    ST: '/Date(1515095827000)/',
-    Trend: 4,
-    Value: 123,
-    WT: '/Date(1515095827000)/',
-    Date: 1515095827000 }
-  */
-// }
-// default value for title local
 app.locals.title = 'dejCom historical data display';
 
-
+// Route Setup
 
 const index = require('./routes/index');
 app.use('/', index);
 
 const authRoutes = require('./routes/authRoutes');
-app.use('/', authRoutes);
+app.use('/api', authRoutes);
 
 const oAuthRoutes = require('./routes/oAuthRoutes');
-app.use('/', oAuthRoutes)
+app.use('/api', oAuthRoutes);
+
+const dayRoutes = require('./routes/dayRoutes');
+app.use('/api', dayRoutes);
+
+const monthRoutes = require('./routes/monthRoutes');
+app.use('/api', monthRoutes);
+
+const yearRoutes = require('./routes/yearRoutes');
+app.use('/api', yearRoutes)
 
 
 module.exports = app;
