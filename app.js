@@ -11,10 +11,13 @@ const path         = require('path');
 
 // modules required after generator
 
-// const dexcom      = require('dexcom-share2');
 const http        = require('https');
 const oauth2lib   = require('oauth20-provider');
 const oauth2 = new oauth2lib( {log: {level: 2}})
+const passport      = require('passport');
+
+require('./config/passport');
+
 
 
 mongoose
