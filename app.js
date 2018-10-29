@@ -9,7 +9,7 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 
-// post generator
+// modules required after generator
 
 // const dexcom      = require('dexcom-share2');
 const http        = require('https');
@@ -40,6 +40,8 @@ app.use(oauth2.inject());
 
 
 
+
+
 // Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -59,6 +61,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
+
+// Config Body Parser
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 // Dexcom Setup
@@ -95,6 +102,9 @@ app.use('/', index);
 
 const authRoutes = require('./routes/authRoutes');
 app.use('/', authRoutes);
+
+const oAuthRoutes = require('./routes/oAuthRoutes');
+app.use('/', oAuthRoutes)
 
 
 module.exports = app;
