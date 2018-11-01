@@ -18,7 +18,7 @@ const oauth2 = new oauth2lib({ log: { level: 2 } });
 const passport = require("passport");
 const express_graphql = require("express-graphql");
 const { buildSchema } = require("graphql");
-const schema = require('./graphql/queries/user')
+const schema = require('./graphql/schema')
 
 require("./config/passport");
 
