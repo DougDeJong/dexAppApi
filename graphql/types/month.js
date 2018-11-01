@@ -1,14 +1,17 @@
 const {GraphQLID, GraphQLNonNull, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt} = graphql;
-import monthType from './month'
+import dayType from './day'
 
 // User Type
-const dayType = new GraphQLObjectType({
-  name: 'day',
+const monthType = new GraphQLObjectType({
+  name: 'month',
   fields: () => ({
       id: {type: new GraphQLNonNull(GraphQLID)
       },
-      date: {
-        type: GraphQLString
+      dates: {
+        type:  new GraphQLList(dayType),
+        resolve(parent, args) {
+          return Day.find({ monthId: parent.id });
+        }
       },
       bgValues: {
         type: GraphQLList
@@ -22,11 +25,12 @@ const dayType = new GraphQLObjectType({
       hourlyAvgs: {
         type: GraphQLList
       },
-      month: {
-        type: monthType,
+      year:  {
+        type: YearType,
+        args: { id: { type: GraphQLID } },
         resolve(parent, args) {
-          return Month.findById(parent.monthId);
-        }
+          return Year.findById(args.id);
+        },
       },
       notes: {
         type: GraphQLString
@@ -35,4 +39,4 @@ const dayType = new GraphQLObjectType({
   )
 });
 
-module.exports = dayType;
+module.exports = monthType;
