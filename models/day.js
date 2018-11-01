@@ -5,7 +5,7 @@ const Schema   = mongoose.Schema;
 const daySchema = new Schema({
   sugars: Array,
   date: Date,
-  user: {type: Schema.Types.ObjectId, ref: 'User'},
+  userId: String,
   dayAverage: Number,
   hourAverages: Array,
   notes: String

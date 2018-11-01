@@ -7,6 +7,9 @@ const monthType = new GraphQLObjectType({
   fields: () => ({
       id: {type: new GraphQLNonNull(GraphQLID)
       },
+      name: {
+        types: new GraphQLString
+      },
       dates: {
         type:  new GraphQLList(dayType),
         resolve(parent, args) {

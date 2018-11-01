@@ -3,13 +3,16 @@ const Schema   = mongoose.Schema;
 
 
 const monthSchema = new Schema({
-  date: Date,
-  days: [{type: Schema.Types.ObjectId, ref: 'Day'}],
-  user: {type: Schema.Types.ObjectId, ref: 'User'},
+  name: String,
   monthAverage: Number,
+  notes: String,
+  bgValues: Array,
+  userId: String,
+  dailyAvg: Number,
+  hourlyAverages: Array,
+  yearId: String,
   notes: String
 });
 
-const Month = mongoose.model("Month", monthSchema);
 
-module.exports = Month;
+module.exports = mongoose.model("Month", monthSchema);
