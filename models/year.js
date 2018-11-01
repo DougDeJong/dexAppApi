@@ -3,13 +3,11 @@ const Schema   = mongoose.Schema;
 
 
 const yearSchema = new Schema({
-  date: Date,
-  months: [{type: Schema.Types.ObjectId, ref: 'Month'}],
-  user: {type: Schema.Types.ObjectId, ref: 'User'},
-  yearAverage: Number,
+  name: String,
+  userId: String,
+  yearlyAvg: Number,
+  monthlhAvgBgValues: Array,
   notes: String
 });
 
-const Year = mongoose.model("Year", yearSchema);
-
-module.exports = Year;
+module.exports = mongoose.model("Year", yearSchema);
