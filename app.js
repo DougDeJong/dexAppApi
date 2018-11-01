@@ -8,6 +8,7 @@ const hbs = require("hbs");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
+const graphqlHTTP = require('express-graphql')
 
 // modules required after generator
 
@@ -17,6 +18,7 @@ const oauth2 = new oauth2lib({ log: { level: 2 } });
 const passport = require("passport");
 const express_graphql = require("express-graphql");
 const { buildSchema } = require("graphql");
+const schema = require('./graphql/schema')
 
 require("./config/passport");
 
@@ -72,6 +74,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.locals.title = "dejCom historical data display";
+
+// graphql setup
+
+app.use("/graphql",graphqlHTTP({
+  schema,
+  graphiql: true
+})
+);
 
 // Route Setup
 

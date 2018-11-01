@@ -1,6 +1,5 @@
-
-var GraphQLNonNull = require('graphql').GraphQLNonNull;
-var GraphQLString = require('graphql').GraphQLString;
+const graphql = require('graphql')
+const {GraphQLNonNull, GraphQLString} = graphql
 var UserType = require('../types/user');
 var UserModel = require('../../models/user');
 

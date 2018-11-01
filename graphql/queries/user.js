@@ -1,23 +1,30 @@
-var GraphQLObjectType = require('graphql').GraphQLObjectType;
-var GraphQLList = require('graphql').GraphQLList;
-var UserModel = require('../../models/user');
-var userType = require('../types/user').userType;
+const graphql = require('graphql')
+const {
+  GraphQLList,
+  GraphQLObjectType,
+  GraphQLSchema
+} = graphql
 
-// Query
-exports.queryType = new GraphQLObjectType({
-  name: 'Query',
-  fields: function () {
-    return {
-      users: {
+var User = require('../../models/user');
+var userType = require('../types/user');
+
+
+const UserQuery = new GraphQLObjectType({
+  name: 'UserQueryType',
+  fields: {
+
+      user: {
         type: new GraphQLList(userType),
-        resolve: function () {
-          const users = UserModel.find().exec()
-          if (!users) {
+        resolve(parent, args) {
+          const user = User.findById(args.id)
+          if (!user) {
             throw new Error('Error')
           }
-          return users
+          return user
+        }
         }
       }
-    }
-  }
-});
+  })
+
+module.exports = new GraphQLSchema ({
+  query: UserQuery })
