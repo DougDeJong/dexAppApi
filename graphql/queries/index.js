@@ -1,8 +1,5 @@
 
-var userQueries = require('./user')
+var UserQuery = require('./user')
 
 
-module.exports = {
-  userQueries,
-
-}
+module.exports = { UserQuery }
