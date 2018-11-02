@@ -2,11 +2,14 @@ const graphql = require('graphql')
 const {
   GraphQLSchema,
   GraphQLString,
-  GraphQLObjectType
+  GraphQLObjectType,
+  GraphQLQueryType,
+  isOutputType
 } = graphql;
 
 var queries = require ('./queries');
 var mutations = require ('./mutations')
+console.log('$$$$$$')
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -19,6 +22,8 @@ const RootQuery = new GraphQLObjectType({
 
   }
 });
+
+console.log(RootQuery)
 //   query: new GraphQLObjectType({
 //     name: 'UserQueries',
 //     fields: queries
