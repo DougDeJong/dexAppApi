@@ -22,5 +22,4 @@ const UserQuery = new GraphQLObjectType({
   }
 })
 
-module.exports = new GraphQLSchema ({
-  query: UserQuery })
+module.exports = new GraphQLSchema({ UserQuery }) 

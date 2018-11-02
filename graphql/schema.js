@@ -7,9 +7,8 @@ const {
   isOutputType
 } = graphql;
 
-var queries = require ('./queries');
+var queries = require ('./queries/user');
 var mutations = require ('./mutations')
-console.log('$$$$$$')
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
