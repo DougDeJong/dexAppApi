@@ -10,7 +10,14 @@ var mutations = require ('./mutations')
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
-  fields: queries,
+  fields: {
+    query: new GraphQLObjectType({
+          name: 'UserQueries',
+          fields: queries
+        })
+
+
+  }
 });
 //   query: new GraphQLObjectType({
 //     name: 'UserQueries',

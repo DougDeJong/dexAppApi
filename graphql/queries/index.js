@@ -1,5 +1,8 @@
+const UserQuery = require('./user');
+const graphql = require('graphql')
+const {GraphQLObjectType, GraphQLQueryType, GraphQLSchemaType, GraphQLQuery, GraphQLSchema} = graphql
 
-import * as UserQuery from './user.js'
-
-
-module.exports = { UserQuery }
+module.exports =  new GraphQLObjectType({
+  name: 'UserQuery',
+  query: UserQuery
+})

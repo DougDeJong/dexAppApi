@@ -1,4 +1,4 @@
-const {GraphQLID, GraphQLNonNull, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt} = graphql;
+import {GraphQLID, GraphQLNonNull, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt} from graphql;
 import monthType from './month'
 
 // User Type
